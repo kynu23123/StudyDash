@@ -1,0 +1,19 @@
+{
+  "name": "studydash",
+  "productName": "StudyDash",
+  "version": "1.0.2",
+  "main": "desktop/entry.cjs",
+  "private": true,
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "start": "node app.js --background",
+    "build": "npm --prefix frontend run build",
+    "typecheck": "npm --prefix frontend run typecheck",
+    "test": "node --test tests/production.test.cjs",
+    "package:windows": "node build/package.cjs"
+  },
+  "devDependencies": {
+    "electron": "45.2.1",
+    "rcedit": "5.0.2"
+  }
+}

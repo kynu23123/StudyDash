@@ -1,0 +1,187 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-ink);
+  --color-secondary: var(--surface-2);
+  --color-secondary-foreground: var(--text);
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--muted);
+  --color-accent: var(--surface-2);
+  --color-accent-foreground: var(--text);
+  --color-border: var(--line);
+  --color-ring: var(--accent);
+  --color-input: var(--line);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text);
+  --animate-dot-pattern-wave: dot-pattern-wave var(--dot-pattern-duration,12s) linear infinite;
+}
+
+
+@keyframes dot-pattern-wave {to {translate:339.41px 0}}
+@property --dot-pattern-x {inherits:false;initial-value:0px;syntax:'<length>'}
+@property --dot-pattern-y {inherits:false;initial-value:0px;syntax:'<length>'}
+@utility dot-pattern-dots {
+  background-color:var(--dot-pattern-color,color-mix(in oklab,var(--muted) 45%,transparent));
+  mask-image:radial-gradient(circle,#000 calc(var(--dot-pattern-size,2px)/2 - .25px),transparent calc(var(--dot-pattern-size,2px)/2 + .5px));
+  mask-position:center;
+  mask-size:calc(var(--dot-pattern-size,2px) + var(--dot-pattern-gap,24px)) calc(var(--dot-pattern-size,2px) + var(--dot-pattern-gap,24px));
+}
+@utility dot-pattern-glow {
+  @media(prefers-reduced-motion:no-preference) {&[data-pointer=move] {--dot-pattern-follow:150ms}}
+  &[data-pointer] {opacity:var(--dot-pattern-strength,.8)}
+  background-image:radial-gradient(closest-side,var(--dot-pattern-glow,var(--accent)),32.5%,color-mix(in oklab,var(--dot-pattern-glow,var(--accent)) 50%,transparent) 50%,67.5%,transparent);
+  height:calc(var(--dot-pattern-proximity,120px)*2);width:calc(var(--dot-pattern-proximity,120px)*2);
+  left:0;top:0;opacity:0;position:absolute;
+  transition:opacity 300ms ease-out,--dot-pattern-x var(--dot-pattern-follow,0s) cubic-bezier(.22,1,.36,1),--dot-pattern-y var(--dot-pattern-follow,0s) cubic-bezier(.22,1,.36,1);
+  translate:calc(var(--dot-pattern-x) - var(--dot-pattern-proximity,120px)) calc(var(--dot-pattern-y) - var(--dot-pattern-proximity,120px));
+}
+@utility dot-pattern-lit {
+  mask-image:radial-gradient(circle,#000 calc(var(--dot-pattern-size,2px)/2*1.8),rgb(0 0 0 / .3) calc(var(--dot-pattern-size,2px)/2*1.8 + .75px),transparent min(calc(var(--dot-pattern-size,2px)/2*6),calc((var(--dot-pattern-size,2px) + var(--dot-pattern-gap,24px))/2)));
+  mask-position:center;
+  mask-size:calc(var(--dot-pattern-size,2px) + var(--dot-pattern-gap,24px)) calc(var(--dot-pattern-size,2px) + var(--dot-pattern-gap,24px));
+}
+@utility dot-pattern-wave {
+  background-image:repeating-linear-gradient(135deg,transparent 0,color-mix(in oklab,var(--dot-pattern-glow,var(--accent)) 28%,transparent) 120px,transparent 240px);
+  bottom:0;left:-339.41px;position:absolute;right:0;top:0;
+}
+
+/* Reka Nova's compact controls and semantic surfaces, shared with the React skin. */
+.workspace-main {
+  max-width:1380px;
+  padding:28px clamp(16px,3.8vw,52px) 48px;
+}
+.workspace-main>header {align-items:center;gap:18px;padding-bottom:24px;margin-bottom:24px}
+.workspace-main .hello h1 {font-weight:600;letter-spacing:-.025em;line-height:1.2}
+.workspace-main .hello p {font-size:.9em}
+.workspace-rail {padding-top:24px}
+.workspace-brand {padding-bottom:24px}
+.workspace-nav button {min-height:44px;font-weight:500;border-radius:7px}
+.workspace-nav button.on {background:var(--surface-2);border:1px solid var(--line);padding-inline:9px}
+.workspace-main .card {border:1px solid var(--line);border-radius:12px;box-shadow:none}
+.workspace-main .card>h2 {font-size:1.05em;font-weight:600;margin-bottom:14px}
+.workspace-main .btn {min-height:36px;border-radius:7px;box-shadow:none;font-weight:500}
+.workspace-main :is(input,select,textarea) {border-radius:7px}
+.workspace-main :is(input,select,textarea):focus-visible {outline:2px solid var(--accent);outline-offset:2px}
+.workspace-main .seg {padding-inline:12px}
+.workspace-main .task {padding-block:13px}
+.workspace-main .task .t {line-height:1.5}
+.workspace-main #appearanceCard .ap-group {border-radius:10px}
+.workspace-main #ring {border:0;background:none;box-shadow:none;display:block;padding:0;flex:none;width:104px;height:104px}
+.task-completion {width:104px;height:104px}
+.task-completion .task-completion-chart {width:104px;height:104px;min-height:104px;aspect-ratio:1}
+.sd-header-actions {display:flex;align-items:center;gap:8px}
+.sd-header-actions [data-slot=button] {cursor:pointer;font-family:inherit}
+.sd-ripple-button {box-sizing:border-box;cursor:pointer}
+.sd-ripple-button[data-size=sm] {height:auto;min-height:32px;padding:4px 10px;font-size:.93em;line-height:1.25}
+.sd-filter-buttons .sd-ripple-button {border-radius:6px;font-weight:500}
+.sd-filter-buttons .sd-ripple-button[data-variant=default] {color:var(--accent-ink);background:var(--accent);border:1px solid transparent}
+.sd-filter-buttons .sd-ripple-button[data-variant=outline] {color:var(--text);background:var(--surface);border:1px solid var(--line)}
+.sd-filter-buttons .sd-ripple-button[data-variant=outline]:hover {background:var(--surface-2)}
+.sd-filter-buttons .n {margin-left:0;opacity:.7;font-variant-numeric:tabular-nums}
+.sd-filter-buttons [data-variant=default] .n {opacity:1}
+.srcbar .sd-ripple-button i {box-sizing:border-box;border:1px solid currentColor}
+.sd-header-actions [data-slot=button][data-variant=default] {
+  color:var(--accent-ink);background:var(--accent);border:1px solid transparent;
+}
+.sd-header-actions [data-slot=button][data-variant=outline] {
+  color:var(--text);background:var(--surface);border:1px solid var(--line);
+}
+.sd-header-actions [data-slot=button]:disabled {cursor:not-allowed}
+#sd-study-scene {position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sd-study-dots {position:absolute;inset:0;width:100%;height:100%;background:var(--study-bg,var(--bg))}
+[data-slot=dot-pattern][data-paused] [data-slot=dot-pattern-wave],html[data-reduce-motion] [data-slot=dot-pattern-wave] {animation-play-state:paused}
+html[data-reduce-motion] [data-slot=dot-pattern-glow] {transition:none}
+.study-center {position:relative;z-index:1}
+.study-launchers button {transition:opacity 140ms ease}
+.study-launchers button:hover {opacity:.75}
+.study-launchers button:focus-visible {outline:2px solid currentColor;outline-offset:2px}
+.days button.on {background:var(--cat,var(--accent));border-color:var(--cat,var(--accent));color:var(--cat-ink,var(--accent-ink))}
+.task .chk {color:var(--cat-ink,var(--accent-ink))}
+.item-color-control {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.item-color-control select {width:auto;max-width:100%;min-width:140px}
+.item-color-control input[type=color] {box-sizing:border-box;width:36px;height:32px;padding:3px;border:1px solid var(--line);border-radius:6px;background:var(--surface);cursor:pointer;flex:none}
+.item-color-control input[type=color]:disabled {opacity:.5;cursor:default}
+.rt-color {grid-column:2 / -1}
+.category-color-row {display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.category-color-row:first-child {border-top:0}
+.category-color-row>label {min-width:90px}
+@media(max-width:480px) {.category-color-row {align-items:flex-start;flex-direction:column;gap:8px}.rt-color {grid-column:2}.item-color-control select {min-width:0;flex:1}.item-color-control .small {flex-basis:100%}}
+.study-tool[data-dark] {--surface:#171717;--surface-2:#222;--text:#eee;--muted:#bbb;--line:#484848}
+.study-tool[data-dark] :is(input,option,select,textarea) {background:#222;color:#eee}
+.study-tool[data-dark] .study-utility {--tool-text:#eee;--tool-surface:#222;--tool-border:#484848}
+.workspace-nav {position:relative;isolation:isolate}
+.workspace-nav button {position:relative;z-index:1}
+.workspace-nav button.on {background:transparent;border-color:transparent}
+.sd-nav-highlight {position:absolute;left:0;top:0;pointer-events:none;border-radius:7px;background:color-mix(in srgb,var(--accent) 9%,var(--surface));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 18%,var(--line));z-index:0}
+[data-slot=button],.sd-ripple-target {position:relative;overflow:hidden;isolation:isolate}
+.sd-button-label {position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px}
+.sd-button-ripple {position:absolute;pointer-events:none;border-radius:50%;background:var(--accent);translate:-50% -50%;z-index:0}
+:is([data-variant=default],.btn.primary,.days button.on)>.sd-button-ripple {background:var(--accent-ink)}
+.study-launchers .sd-button-ripple {background:var(--study-accent,var(--accent))}
+.sd-flip-words {display:inline-grid;min-width:20ch;min-height:1.5em;perspective:500px}
+.sd-flip-words>span:not(.sr-only) {grid-area:1/1;display:inline-block;transform-origin:50% 60%}
+.title-tag {color:color-mix(in srgb,var(--text) 72%,var(--bg))}
+.title-notebook {display:block;margin:0 auto 16px;object-fit:contain}
+.title {background:var(--bg);color:var(--text)}
+.title .title-hint,.title .title-form label {color:var(--muted)}
+.title-ed {border-color:var(--line)}
+#sd-title-background,.sd-title-starfield {position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sd-starfield {position:relative;isolation:isolate;overflow:hidden;container-type:size}
+.sd-starfield-layer {position:absolute;inset:0;pointer-events:none;color:var(--starfield-color,var(--accent));mask-image:radial-gradient(ellipse at center,#000 30%,rgb(0 0 0 / .8) 65%,transparent 100%)}
+.sd-starfield-distant {position:absolute;width:1px;height:1px;border-radius:50%;background:currentColor;opacity:.18}
+.sd-starfield-flight {position:absolute;left:50%;top:50%;border-radius:50%;background:currentColor;animation:sd-starfield-flight var(--star-duration) linear var(--star-delay) infinite}
+@keyframes sd-starfield-flight {
+  0% {opacity:0;transform:translate3d(calc(var(--star-x)*.02),calc(var(--star-y)*.02),0) rotate(var(--star-angle)) scale(.2)}
+  8% {opacity:.12}
+  45% {opacity:.3;transform:translate3d(calc(var(--star-x)*.12),calc(var(--star-y)*.12),0) rotate(var(--star-angle)) scale(.45)}
+  70% {opacity:.55;transform:translate3d(calc(var(--star-x)*.28),calc(var(--star-y)*.28),0) rotate(var(--star-angle)) scale(.8)}
+  88% {opacity:.8;transform:translate3d(calc(var(--star-x)*.55),calc(var(--star-y)*.55),0) rotate(var(--star-angle)) scale(1.7,1)}
+  98% {opacity:.55;transform:translate3d(var(--star-x),var(--star-y),0) rotate(var(--star-angle)) scale(4,1.2)}
+  100% {opacity:0;transform:translate3d(calc(var(--star-x)*1.1),calc(var(--star-y)*1.1),0) rotate(var(--star-angle)) scale(4.5,1.2)}
+}
+.sd-starfield[data-paused] .sd-starfield-flight,html[data-reduce-motion] .sd-starfield-flight {animation-play-state:paused}
+@container(max-width:639px) {.sd-starfield-flight:nth-of-type(n+149) {display:none}}
+@media(prefers-reduced-motion:reduce) {.sd-starfield-flight {animation-play-state:paused}}
+.title-motion {display:block;margin:18px auto 0;background:none;border:0;color:var(--muted);font-size:12.5px;cursor:pointer;padding:6px 10px}
+.title[data-paused] * {animation-play-state:paused!important}
+.workspace-brand>img,.desktop-caption>img {flex:none;object-fit:contain}
+.sd-dialog-source {display:none!important}
+[data-slot=dialog-overlay] {background:rgb(0 0 0 / .65);backdrop-filter:blur(3px)}
+.sd-dialog-content {box-sizing:border-box;grid-template-columns:minmax(0,1fr);width:calc(100% - 32px);max-width:520px;max-height:calc(100dvh - 48px);overflow-y:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);padding:24px;border-radius:12px;font-family:var(--ui-font,inherit);box-shadow:0 24px 80px rgb(0 0 0 / .3)}
+.sd-dialog-content>div {min-width:0}
+.sd-dialog-content .modal {position:static;box-sizing:border-box;width:100%;max-width:none;max-height:none;padding:0;border:0;box-shadow:none;background:transparent;overflow:visible}
+.sd-dialog-content .modal .row {grid-template-columns:repeat(2,minmax(0,1fr))}
+.sd-dialog-content .modal .row>div {min-width:0}
+.sd-dialog-content .modal .foot .btn {box-sizing:border-box;min-height:32px;padding:4px 10px;font-size:.93em}
+.sd-dialog-content [data-slot=dialog-close] {color:var(--muted);background:transparent;border:0;cursor:pointer;padding:4px}
+.sd-dialog-content [data-slot=dialog-close] svg {width:18px;height:18px}
+.sd-dialog-content :is(input,select,textarea) {box-sizing:border-box;max-width:100%;font:inherit;color-scheme:var(--control-color-scheme,normal)}
+.sd-dialog-content [data-slot=dialog-description] {line-height:1.6;color:var(--muted)}
+.sd-dialog-content [data-slot=button][data-variant=default] {color:var(--accent-ink);background:var(--accent);border:1px solid transparent}
+.sd-dialog-content [data-slot=button][data-variant=outline] {color:var(--text);background:var(--surface-2);border:1px solid var(--line)}
+.sd-confirm-content {max-width:440px;padding-top:32px}
+@media(max-width:420px) {.sd-dialog-content {padding:20px}.sd-dialog-content .modal .row {grid-template-columns:minmax(0,1fr)}}
+@media(pointer:coarse) {.sd-ripple-button[data-size=sm],.sd-dialog-content .modal .foot .btn {min-height:44px;height:auto}}
+#studyClock[data-breathing-active] {animation:sd-timer-breathe 6s ease-in-out infinite}
+@keyframes sd-timer-breathe {0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.985);opacity:.88}}
+@media(prefers-reduced-motion:no-preference) {
+  html:not([data-reduce-motion]) [data-slot=dialog-content][data-state=open] {animation:sd-dialog-enter 180ms ease-out both}
+  html:not([data-reduce-motion]) [data-slot=dialog-overlay][data-state=open] {animation:sd-overlay-enter 180ms ease-out both}
+}
+@keyframes sd-dialog-enter {from{opacity:0;scale:.97}to{opacity:1;scale:1}}
+@keyframes sd-overlay-enter {from{opacity:0}to{opacity:1}}
+html[data-reduce-motion] .workspace-main>section {opacity:1!important;transform:none!important}
+@media(max-width:760px) {
+  .workspace-main {padding:16px 12px 32px}
+  .workspace-main>header {gap:12px}
+  .workspace-main #ring {margin-inline-end:auto}
+  .workspace-main .btn,.workspace-main .seg button {min-height:44px}
+}
+@media(prefers-reduced-motion:reduce) {
+  .study-launchers button {transition:none}
+}

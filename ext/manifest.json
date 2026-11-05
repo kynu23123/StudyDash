@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "StudyDash Sync",
+  "version": "1.2.0",
+  "description": "Keeps StudyDash up to date whenever you open Google Classroom, PowerSchool, Genesis or Outlook. Nothing leaves your computer.",
+  "icons": { "128": "icon.png" },
+  "action": { "default_title": "StudyDash Sync", "default_icon": "icon.png" },
+  "background": { "service_worker": "background.js" },
+  "host_permissions": ["http://127.0.0.1/*"],
+  "content_scripts": [{
+    "matches": [
+      "https://classroom.google.com/*",
+      "https://*.powerschool.com/*",
+      "https://*/guardian/*",
+      "https://*/genesis/*",
+      "https://*/*/genesis/*",
+      "https://*/*/parents*",
+      "https://outlook.office.com/*",
+      "https://outlook.office365.com/*",
+      "https://outlook.cloud.microsoft/*"
+    ],
+    "js": ["reader.js", "content.js"],
+    "run_at": "document_idle"
+  }]
+}

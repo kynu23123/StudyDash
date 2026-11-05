@@ -1,0 +1,185 @@
+/* shadcn Button, Badge and Card variants adapted to StudyDash's native HTML. */
+.wrap {
+  --card: var(--surface);
+  --secondary: var(--surface-2);
+  --border: var(--line);
+  --primary: var(--accent);
+  --foreground: var(--text);
+  display:grid;
+  grid-template-columns:204px minmax(0,1fr);
+  max-width:none;
+  padding:0;
+}
+.workspace-rail {
+  align-self:start;
+  position:sticky;
+  top:34px;
+  min-height:calc(100dvh - 34px);
+  background:var(--card);
+  border-inline-end:1px solid var(--border);
+  padding:22px 12px;
+}
+.workspace-brand {display:flex;align-items:center;gap:10px;padding:0 8px 22px}
+.workspace-brand strong,.workspace-brand small {display:block}
+.workspace-brand small {color:var(--muted)}
+.workspace-nav {display:grid;gap:3px;margin:0;border:0;overflow:visible}
+.workspace-group {font-size:.86em;color:var(--muted);padding:12px 9px 2px}
+.workspace-nav button {
+  min-height:44px;display:flex;align-items:center;justify-content:space-between;
+  gap:5px;text-align:left;margin:0;padding:7px 9px;border:1px solid transparent;
+  border-radius:8px;white-space:normal;
+}
+.workspace-nav button:hover {background:var(--secondary);color:var(--foreground)}
+.workspace-nav button.on {background:var(--secondary);border-color:var(--border);border-inline-start:3px solid var(--primary);padding-inline-start:7px}
+.workspace-nav button:active,.workspace-main .btn:active {transform:translateY(1px)}
+.workspace-nav .count {
+  background:var(--secondary);color:var(--foreground);
+  border:1px solid var(--border);border-radius:6px;font-variant-numeric:tabular-nums;
+}
+.workspace-nav .workspace-settings {margin-top:16px;border-top-color:var(--border)}
+.workspace-main {min-width:0;width:100%;max-width:1520px;margin-inline:auto;padding:26px clamp(16px,3vw,44px) 48px}
+.workspace-main>header {
+  background:var(--header-bg,var(--card));
+  border:1px solid var(--border);border-radius:14px;
+  padding:18px clamp(14px,2vw,24px);margin-bottom:24px;min-height:88px;
+}
+.workspace-main .hello {min-width:0;overflow-wrap:anywhere}
+.workspace-main .hello p {margin:0 0 4px;font-size:.9em}
+.workspace-main .hello h1 {line-height:1.16}
+.workspace-main .card {box-shadow:none;border-radius:12px}
+.workspace-main .card h2 {text-transform:none;letter-spacing:0;color:var(--foreground);font-size:1.05em}
+.workspace-main .workspace-task-title {font-size:1.25em;margin-bottom:14px}
+.workspace-main .tasks-card {padding:18px}
+.workspace-main #v-today .grid {grid-template-columns:minmax(0,1.9fr) minmax(260px,1fr)}
+.workspace-main #v-today .grid>div {min-width:0}
+.workspace-main header .btn {min-height:44px}
+.workspace-main #appearanceCard select {width:auto;max-width:100%}
+:where(button,a[href],select,summary,label[for],input[type=checkbox],input[type=radio]) {cursor:pointer}
+:where(button,input,select):disabled {cursor:not-allowed}
+:where(button,a,input,select,summary,textarea):focus-visible {outline:2px solid var(--text);outline-offset:3px}
+@media(max-width:1060px) {
+  .workspace-main #v-today .grid {grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:760px) {
+  .wrap {display:block}
+  .workspace-rail {position:static;min-height:0;border-inline-end:0;border-bottom:1px solid var(--border);padding:12px}
+  .workspace-brand {padding:0 0 8px}
+  .workspace-nav {grid-template-columns:repeat(auto-fit,minmax(min(135px,100%),1fr))}
+  .workspace-group {display:none}
+  .workspace-nav .workspace-settings {margin-top:0;border-top-color:transparent}
+  .workspace-main {padding:16px 12px 32px}
+  .workspace-main>header {gap:10px;margin-bottom:16px}
+  .workspace-main>header .hello {flex-basis:100%}
+  .workspace-main>header .spacer {display:none}
+  .workspace-main .seg button,.workspace-main .srcbar button {min-height:44px}
+}
+@media(prefers-reduced-motion:reduce) {
+  .workspace-nav button,.workspace-main header .btn {transition:none}
+  .workspace-nav button:active,.workspace-main .btn:active {transform:none}
+}
+.desktop-caption {max-width:100%}
+
+.workspace-main {max-width:1240px;padding-inline:clamp(16px,4vw,56px)}
+.workspace-rail {background:var(--bg)}
+.workspace-main>header {
+  background:var(--header-bg,transparent);
+  border:0;border-bottom:1px solid var(--line);border-radius:0;
+  padding:8px 0 22px;
+}
+:root[data-header] .workspace-main>header {padding-inline:16px;border-radius:10px}
+.workspace-main .card {border-radius:10px}
+.workspace-main .tasks-card {padding:18px}
+.workspace-main .ring {gap:8px}
+.completion-dial {
+  width:38px;aspect-ratio:1;flex:none;border-radius:50%;
+  background:conic-gradient(var(--accent) var(--completed,0%),var(--line) 0);
+  mask-image:radial-gradient(transparent 58%,#000 60%);
+}
+.completion-label b {font-variant-numeric:tabular-nums}
+.workspace-main header .btn {border-radius:8px}
+.workspace-nav button.on {border-inline-start:1px solid var(--border);padding-inline-start:9px}
+@media(max-width:760px) {
+  .workspace-main {padding-inline:12px}
+}
+
+/* Study tool forms use the same surfaces and control proportions as Settings. */
+.study-tool .study-utility {
+  --tool-surface:var(--surface-2);
+  --tool-border:var(--line);
+  --tool-text:var(--text);
+  --tool-muted:var(--muted);
+  padding:12px;
+}
+.study-tool[data-dark] .study-utility {
+  --tool-surface:#222222;
+  --tool-border:#484848;
+  --tool-text:#eeeeee;
+  --tool-muted:#bbb;
+}
+.study-tool[data-dark] {--surface:#171717;--surface-2:#222222;--text:#eeeeee;--muted:#bbbbbb;--line:#484848}
+.study-tool[data-contrast] {--surface:#000000;--surface-2:#111111;--text:#ffffff;--muted:#ffffff;--line:#888888}
+.study-tool :is(select,option,input,textarea) {color:var(--text);background-color:var(--surface)}
+.study-tool[data-dark] :is(select,option,input,textarea) {color:#eeeeee;background-color:#222222}
+.study-tool[data-contrast] :is(select,option,input,textarea) {color:#ffffff;background-color:#000000}
+.study-tool .study-utility-form :is(select,input,textarea) {color:var(--tool-text);background-color:var(--tool-surface)}
+.study-tool[data-contrast] .study-utility {--tool-border:#888;--tool-muted:#fff}
+.study-utility-form {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:8px;
+}
+.study-utility-form label {grid-column:1/-1;font-weight:600}
+.study-utility-form :is(input,select) {
+  min-width:0;width:100%;min-height:38px;margin:0;
+  color:var(--tool-text);background:var(--tool-surface);
+  border:1px solid var(--tool-border);border-radius:8px;
+}
+.study-utility-form select {grid-column:1/-1}
+.study-utility-form .btn {min-height:38px}
+.study-utility-status {margin:10px 0;color:var(--tool-muted);overflow-wrap:anywhere}
+.study-utility-status:empty,.study-definitions:empty {display:none}
+.study-player,.study-definitions {
+  margin:12px 0;padding:10px;
+  border:1px solid var(--tool-border);border-radius:10px;background:var(--tool-surface);
+}
+.study-player audio {display:block}
+.study-definitions {padding-inline-start:2em}
+.study-definitions li {padding:6px 3px}
+.study-definitions li+li {border-top:1px solid var(--tool-border)}
+.study-source {color:inherit;text-underline-offset:3px}
+@container (max-width:260px) {
+  .study-utility-form .btn {grid-column:1/-1;justify-self:start}
+}
+.study-tool-scroll {container-type:inline-size}
+
+.study-input-card {
+  padding:12px;
+  border:1px solid var(--tool-border);
+  border-radius:10px;
+  background:var(--tool-surface);
+}
+.study-input-card :is(input,select) {background:transparent}
+.study-player-heading {display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.study-player-heading label {display:flex;align-items:center;gap:5px;color:var(--tool-muted)}
+.study-player-heading input {accent-color:var(--accent);cursor:pointer}
+.study-definitions li::marker {font-weight:600;color:var(--tool-muted)}
+.study-definitions li {line-height:1.55}
+.study-browser-bar {display:flex;align-items:center;gap:4px;padding:6px;border-bottom:1px solid var(--line)}
+.study-browser-bar .btn {min-width:0;padding:5px 7px}
+.study-browser-bar input {flex:1;min-width:0;width:auto}
+#studyBrowserStatus {margin:6px 10px}
+#studyBrowserViewport {flex:1;min-height:0;display:flex}
+#studyBrowserViewport webview {flex:1;min-width:0;background:#fff}
+
+.study-browser-tabs {display:flex;gap:3px;overflow-x:auto;padding:5px 6px 0;min-height:36px;border-bottom:1px solid var(--line)}
+.study-browser-tab {display:flex;align-items:center;flex:0 0 auto;max-width:200px;min-width:90px;border:1px solid var(--line);border-radius:7px 7px 0 0}
+.study-browser-tab button {border:0;background:transparent;color:inherit;padding:7px;cursor:pointer}
+.study-browser-tab button:first-child {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;text-align:left}
+.study-browser-tab button[aria-pressed=true] {background:var(--surface-2);font-weight:600}
+.study-browser-tab-actions {display:flex;gap:10px;align-items:start;padding:4px 6px}
+.study-browser-tab-actions .btn {padding:3px 8px;min-height:30px}
+#studyBrowserHistory {max-height:180px;overflow:auto;max-width:250px}
+#studyBrowserHistory button {display:block;text-align:left;width:100%;background:none;color:inherit;border:0;padding:7px;overflow-wrap:anywhere;cursor:pointer}
+#studyBrowserHistory button:hover {text-decoration:underline}
+#studyBrowserViewport webview[hidden] {display:none!important}
